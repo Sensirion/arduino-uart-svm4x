@@ -3,10 +3,9 @@
 This is the Sensirion SVM41 library for Arduino using the
 modules UART interface.
 
-TODO: DRIVER_GENERATOR Add image of sensor / eval kit as images/svm41.jpg
-[<center><img src="images/svm41.jpg" width="300px"></center>](TODO: DRIVER_GENERATOR add url to the eval kit)
+[<center><img src="images/SVM4x.png" width="300px"></center>](https://sensirion.com/my-sgp-ek)
 
-Click [here](TODO: DRIVER_GENERATOR Add url to the eval kit) to learn more about the SVM41
+Click [here](https://sensirion.com/my-sgp-ek) to learn more about the SVM41
 sensor and the SVM41 Evaluation Kit Board.
 
 
@@ -33,7 +32,7 @@ Note: Installation via the Arduino Library Manager is coming soon.
    board to find the correct pins. The pinout of the SVM41
    Sensor board can be found in the data sheet.
 
-    * **VDD** of the SEK-SVM41 to the **xV** of your Arduino board TODO: DRIVER_GENERATOR Add correct voltage
+    * **VDD** of the SEK-SVM41 to the **3.3V or 5V** of your Arduino board
     * **GND** of the SEK-SVM41 to the **GND** of your Arduino board
     * **RX** of the SEK-SVM41 to the **UART1-TX** of your Arduino board
     * **TX** of the SEK-SVM41 to the **UART1-RX** of your Arduino board
