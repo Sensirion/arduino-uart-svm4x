@@ -147,9 +147,9 @@ uint16_t SensirionUartSvm41::readMeasuredRawValues(int16_t& rawHumidity,
 uint16_t SensirionUartSvm41::getTemperatureOffsetForRhtMeasurements(
     uint8_t tOffset[], uint8_t tOffsetSize) {
     uint16_t error;
-    uint8_t buffer[522];
-    SensirionShdlcTxFrame txFrame(buffer, 522);
-    SensirionShdlcRxFrame rxFrame(buffer, 522);
+    uint8_t buffer[20];
+    SensirionShdlcTxFrame txFrame(buffer, 20);
+    SensirionShdlcRxFrame rxFrame(buffer, 20);
 
     error = txFrame.begin(0x60, SVM41_UART_ADDRESS, 1);
     error |= txFrame.addUInt8(0x01);
@@ -250,11 +250,11 @@ uint16_t SensirionUartSvm41::storeNvData() {
 uint16_t SensirionUartSvm41::setTemperatureOffsetForRhtMeasurements(
     const uint8_t tOffset[], uint8_t tOffsetSize) {
     uint16_t error;
-    uint8_t buffer[520];
-    SensirionShdlcTxFrame txFrame(buffer, 520);
-    SensirionShdlcRxFrame rxFrame(buffer, 520);
+    uint8_t buffer[16];
+    SensirionShdlcTxFrame txFrame(buffer, 16);
+    SensirionShdlcRxFrame rxFrame(buffer, 16);
 
-    error = txFrame.begin(0x60, SVM41_UART_ADDRESS, 255);
+    error = txFrame.begin(0x60, SVM41_UART_ADDRESS, 5);
     error |= txFrame.addUInt8(0x81);
     error |= txFrame.addBytes(tOffset, tOffsetSize);
     error |= txFrame.finish();
@@ -413,9 +413,9 @@ uint16_t SensirionUartSvm41::setNoxState(const uint8_t state[],
 uint16_t SensirionUartSvm41::getProductType(unsigned char productType[],
                                             uint8_t productTypeSize) {
     uint16_t error;
-    uint8_t buffer[522];
-    SensirionShdlcTxFrame txFrame(buffer, 522);
-    SensirionShdlcRxFrame rxFrame(buffer, 522);
+    uint8_t buffer[76];
+    SensirionShdlcTxFrame txFrame(buffer, 76);
+    SensirionShdlcRxFrame rxFrame(buffer, 76);
 
     error = txFrame.begin(0xD0, SVM41_UART_ADDRESS, 1);
     error |= txFrame.addUInt8(0x00);
@@ -437,9 +437,9 @@ uint16_t SensirionUartSvm41::getProductType(unsigned char productType[],
 uint16_t SensirionUartSvm41::getProductName(unsigned char productName[],
                                             uint8_t productNameSize) {
     uint16_t error;
-    uint8_t buffer[522];
-    SensirionShdlcTxFrame txFrame(buffer, 522);
-    SensirionShdlcRxFrame rxFrame(buffer, 522);
+    uint8_t buffer[76];
+    SensirionShdlcTxFrame txFrame(buffer, 76);
+    SensirionShdlcRxFrame rxFrame(buffer, 76);
 
     error = txFrame.begin(0xD0, SVM41_UART_ADDRESS, 1);
     error |= txFrame.addUInt8(0x01);
@@ -461,9 +461,9 @@ uint16_t SensirionUartSvm41::getProductName(unsigned char productName[],
 uint16_t SensirionUartSvm41::getSerialNumber(unsigned char serialNumber[],
                                              uint8_t serialNumberSize) {
     uint16_t error;
-    uint8_t buffer[522];
-    SensirionShdlcTxFrame txFrame(buffer, 522);
-    SensirionShdlcRxFrame rxFrame(buffer, 522);
+    uint8_t buffer[76];
+    SensirionShdlcTxFrame txFrame(buffer, 76);
+    SensirionShdlcRxFrame rxFrame(buffer, 76);
 
     error = txFrame.begin(0xD0, SVM41_UART_ADDRESS, 1);
     error |= txFrame.addUInt8(0x03);
