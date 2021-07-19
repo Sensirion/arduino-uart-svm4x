@@ -168,7 +168,7 @@ uint16_t SensirionUartSvm41::readMeasuredRawValues(int16_t& rawHumidity,
 }
 
 uint16_t SensirionUartSvm41::getTemperatureOffsetForRhtMeasurementsTicks(
-    uint8_t tOffset[], uint8_t tOffsetSize) {
+    int16_t& tOffset) {
     uint16_t error;
     uint8_t buffer[20];
     SensirionShdlcTxFrame txFrame(buffer, 20);
@@ -187,24 +187,19 @@ uint16_t SensirionUartSvm41::getTemperatureOffsetForRhtMeasurementsTicks(
         return error;
     }
 
-    error |= rxFrame.getBytes(tOffset, tOffsetSize);
+    error |= rxFrame.getInt16(tOffset);
     return error;
 }
 
 uint16_t
 SensirionUartSvm41::getTemperatureOffsetForRhtMeasurements(float& tOffset) {
     uint16_t error;
-    uint8_t buffer[2];
     int16_t tOffsetTicks;
 
-    error = getTemperatureOffsetForRhtMeasurementsTicks(buffer, 2);
+    error = getTemperatureOffsetForRhtMeasurementsTicks(tOffsetTicks);
     if (error) {
         return error;
     }
-
-    tOffsetTicks = static_cast<uint16_t>(buffer[0]) << 8;
-    tOffsetTicks |= static_cast<uint16_t>(buffer[1]);
-    tOffsetTicks = static_cast<int16_t>(tOffsetTicks);
 
     tOffset = static_cast<float>(tOffsetTicks) / 200.0f;
     return NoError;
@@ -290,15 +285,15 @@ uint16_t SensirionUartSvm41::storeNvData() {
 }
 
 uint16_t SensirionUartSvm41::setTemperatureOffsetForRhtMeasurementsTicks(
-    const uint8_t tOffset[], uint8_t tOffsetSize) {
+    const int16_t tOffset) {
     uint16_t error;
     uint8_t buffer[16];
     SensirionShdlcTxFrame txFrame(buffer, 16);
     SensirionShdlcRxFrame rxFrame(buffer, 16);
 
-    error = txFrame.begin(0x60, SVM41_UART_ADDRESS, 5);
+    error = txFrame.begin(0x60, SVM41_UART_ADDRESS, 3);
     error |= txFrame.addUInt8(0x81);
-    error |= txFrame.addBytes(tOffset, tOffsetSize);
+    error |= txFrame.addInt16(tOffset);
     error |= txFrame.finish();
     if (error) {
         return error;
@@ -313,12 +308,7 @@ uint16_t SensirionUartSvm41::setTemperatureOffsetForRhtMeasurementsTicks(
 uint16_t
 SensirionUartSvm41::setTemperatureOffsetForRhtMeasurements(float tOffset) {
     int16_t tOffsetTicks = static_cast<int16_t>(tOffset * 200.0f);
-
-    uint8_t buffer[2];
-    buffer[0] = static_cast<uint8_t>((tOffsetTicks & 0xFF00) >> 8);
-    buffer[1] = static_cast<uint8_t>((tOffsetTicks & 0x00FF));
-
-    return setTemperatureOffsetForRhtMeasurementsTicks(buffer, 2);
+    return setTemperatureOffsetForRhtMeasurementsTicks(tOffsetTicks);
 }
 
 uint16_t SensirionUartSvm41::setVocTuningParameters(

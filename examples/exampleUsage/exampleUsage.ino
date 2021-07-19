@@ -110,6 +110,26 @@ void setup() {
         Serial.println();
     }
 
+    error = svm41.setTemperatureOffsetForRhtMeasurements(0);
+    if (error) {
+        Serial.print("Error trying to execute "
+                     "setTemperatureOffsetForRhtMeasurements(): ");
+        errorToString(error, errorMessage, 256);
+        Serial.println(errorMessage);
+    }
+
+    float tOffset;
+    error = svm41.getTemperatureOffsetForRhtMeasurements(tOffset);
+    if (error) {
+        Serial.print("Error trying to execute "
+                     "getTemperatureOffsetForRhtMeasurements(): ");
+        errorToString(error, errorMessage, 256);
+        Serial.println(errorMessage);
+    } else {
+        Serial.print("Temperature Offset:");
+        Serial.println(tOffset);
+    }
+
     // Start Measurement
     error = svm41.startMeasurement();
     if (error) {

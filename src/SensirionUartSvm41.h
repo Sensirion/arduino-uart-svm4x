@@ -150,16 +150,15 @@ class SensirionUartSvm41 {
      * getTemperatureOffsetForRhtMeasurementsTicks() - Gets the T-Offset for the
      * temperature compensation of the RHT algorithm.
      *
-     * @param tOffset Temperature offset which is used for the RHT measurements.
-     * Firmware versions prior to 2.0 will return a float value (4 bytes). For
-     * firmware version >= 2.0 an int16 value (2 bytes) is returned. Float
-     * temperature values are in degrees celsius with no scaling. Integer
-     * temperature values are in degrees celsius with a scaling of 200.
+     * @param tOffset Temperature offset which is used for the RHT measurements
+     * as an int16 value (2 bytes) in degrees celsius with a scaling of 200.
+     *
+     * @note Only SVM41 firmware versions >= 2.0 are supported. Please update
+     * your SVM41 module if necessary.
      *
      * @return 0 on success, an error code otherwise
      */
-    uint16_t getTemperatureOffsetForRhtMeasurementsTicks(uint8_t tOffset[],
-                                                         uint8_t tOffsetSize);
+    uint16_t getTemperatureOffsetForRhtMeasurementsTicks(int16_t& tOffset);
 
     /**
      * getTemperatureOffsetForRhtMeasurements() - Gets the T-Offset for the
@@ -252,16 +251,15 @@ class SensirionUartSvm41 {
      * in the non-volatile memory of the device otherwise the parameter will be
      * reset upton a device reset.
      *
-     * @param tOffset Temperature offset in degrees celsius. Accepted data
-     * formats are either a float value (4 bytes) or an int16 value (2 bytes).
-     * Float temperature values are in degrees celsius with no scaling. Integer
-     * temperature values are in degrees celsius with a scaling of 200.
+     * @param tOffset Temperature offset which is used for the RHT measurements
+     * as an int16 value (2 bytes) in degrees celsius with a scaling of 200.
+     *
+     * @note Only SVM41 firmware versions >= 2.0 are supported. Please update
+     * your SVM41 module if necessary.
      *
      * @return 0 on success, an error code otherwise
      */
-    uint16_t
-    setTemperatureOffsetForRhtMeasurementsTicks(const uint8_t tOffset[],
-                                                uint8_t tOffsetSize);
+    uint16_t setTemperatureOffsetForRhtMeasurementsTicks(const int16_t tOffset);
 
     /**
      * setTemperatureOffsetForRhtMeasurements() - Sets the T-Offset for the
