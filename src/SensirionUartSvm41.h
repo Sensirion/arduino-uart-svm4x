@@ -181,7 +181,7 @@ class SensirionUartSvm41 {
      * conditions.
      *
      * @param learningTimeOffsetHours Time constant to estimate the VOC
-     * algorithm gain from the history in hours. Past events will be forgotten
+     * algorithm offset from the history in hours. Past events will be forgotten
      * after about twice the learning time.
      *
      * @param learningTimeGainHours Time constant to estimate the VOC algorithm
@@ -215,7 +215,7 @@ class SensirionUartSvm41 {
      * conditions.
      *
      * @param learningTimeOffsetHours Time constant to estimate the NOx
-     * algorithm gain from the history in hours. Past events will be forgotten
+     * algorithm offset from the history in hours. Past events will be forgotten
      * after about twice the learning time.
      *
      * @param learningTimeGainHours Time constant to estimate the NOx algorithm
