@@ -3,7 +3,7 @@
  *
  * SHDLC-Generator: 0.8.2
  * Yaml Version: 0.8.1
- * Template Version: 0.7.0-84-g1150250
+ * Template Version: 0.7.0-92-g227c1e2
  */
 /*
  * Copyright (c) 2021, Sensirion AG
@@ -54,7 +54,7 @@ class SensirionUartSvm41 {
     void begin(Stream& serial);
 
     /**
-     * startMeasurement() - Starts measurement in polling mode.
+     * startMeasurement() - Starts continuous measurement in polling mode.
      *
      * @note This command is only available in idle mode.
      *
@@ -63,8 +63,7 @@ class SensirionUartSvm41 {
     uint16_t startMeasurement(void);
 
     /**
-     * stopMeasurement() - Leaves the measurement mode and returns to the idle
-     * mode.
+     * stopMeasurement() - Stops the measurement mode and returns to idle mode.
      *
      * @note This command is only available in measurement mode.
      *
@@ -150,8 +149,8 @@ class SensirionUartSvm41 {
      * getTemperatureOffsetForRhtMeasurementsTicks() - Gets the T-Offset for the
      * temperature compensation of the RHT algorithm.
      *
-     * @param tOffset Temperature offset which is used for the RHT measurements
-     * as an int16 value (2 bytes) in degrees celsius with a scaling of 200.
+     * @param tOffset Temperature offset which is used for the RHT measurements.
+     * Values are in degrees celsius with a scaling of 200.
      *
      * @note Only SVM41 firmware versions >= 2.0 are supported. Please update
      * your SVM41 module if necessary.
@@ -220,7 +219,8 @@ class SensirionUartSvm41 {
      *
      * @param learningTimeGainHours Time constant to estimate the NOx algorithm
      * gain from the history in hours. Past events will be forgotten after about
-     * twice the learning time.
+     * twice the learning time. Note that this value is not relevant for NOx
+     * algorithm type.
      *
      * @param gatingMaxDurationMinutes Maximum duration of gating in minutes
      * (freeze of estimator during high NOx index signal). Set to zero to
@@ -228,7 +228,8 @@ class SensirionUartSvm41 {
      *
      * @param stdInitial Initial estimate for standard deviation. Lower value
      * boosts events during initial learning period, but may result in larger
-     * device-to-device variations.
+     * device-to-device variations. Note that this value is not relevant for NOx
+     * algorithm type.
      *
      * @param gainFactor Gain factor to amplify or to attenuate the NOx index
      * output.
@@ -257,8 +258,8 @@ class SensirionUartSvm41 {
      * in the non-volatile memory of the device otherwise the parameter will be
      * reset upton a device reset.
      *
-     * @param tOffset Temperature offset which is used for the RHT measurements
-     * as an int16 value (2 bytes) in degrees celsius with a scaling of 200.
+     * @param tOffset Temperature offset in degrees celsius with a scaling of
+     * 200.
      *
      * @note Only SVM41 firmware versions >= 2.0 are supported. Please update
      * your SVM41 module if necessary.
@@ -332,7 +333,7 @@ class SensirionUartSvm41 {
      * reset upton a device reset.
      *
      * @param noxIndexOffset NOx index representing typical (average)
-     * conditions. Allowed values are in range 1..250. The default value is 100.
+     * conditions. Allowed values are in range 1..250. The default value is 1.
      *
      * @param learningTimeOffsetHours Time constant to estimate the NOx
      * algorithm offset from the history in hours. Past events will be forgotten
@@ -342,17 +343,19 @@ class SensirionUartSvm41 {
      * @param learningTimeGainHours Time constant to estimate the NOx algorithm
      * gain from the history in hours. Past events will be forgotten after about
      * twice the learning time. Allowed values are in range 1..1000. The default
-     * value is 12 hours.
+     * value is 12 hours. Note that this value is not relevant for NOx algorithm
+     * type.
      *
      * @param gatingMaxDurationMinutes Maximum duration of gating in minutes
      * (freeze of estimator during high NOx index signal). Set to zero to
      * disable the gating. Allowed values are in range 0..3000. The default
-     * value is 180 minutes.
+     * value is 720 minutes.
      *
      * @param stdInitial Initial estimate for standard deviation. Lower value
      * boosts events during initial learning period, but may result in larger
      * device-to-device variations. Allowed values are in range 10..5000. The
-     * default value is 50.
+     * default value is 50. Note that this value is not relevant for NOx
+     * algorithm type.
      *
      * @param gainFactor Gain factor to amplify or to attenuate the NOx index
      * output. Allowed values are in range 1..1000. The default value is 230.
@@ -371,8 +374,9 @@ class SensirionUartSvm41 {
      * short interruption, skipping initial learning phase. This command is only
      * available during measurement mode.
      *
-     * @note This feature can only be used after at least 3 hours of continuous
-     * operation.
+     * @note Retrieved values can only be used after at least 3 hours of
+     * continuous operation. Restoring the state by calling set voc state should
+     * not be done after interruptions of more than 10 minutes.
      *
      * @param state Current VOC algorithm state.
      *
