@@ -36,6 +36,11 @@
 // [Serial, Serial1, Serial2, etc.]
 #define SENSOR_SERIAL_INTERFACE Serial1
 
+// For a ESP32 board use following lines instead
+// #include <HardwareSerial.h>
+// HardwareSerial HwSerial(2);
+// #define SENSOR_SERIAL_INTERFACE HwSerial
+
 SensirionUartSvm41 svm41;
 
 void setup() {

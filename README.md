@@ -3,54 +3,157 @@
 This is the Sensirion SVM41 library for Arduino using the
 modules UART interface.
 
-[<center><img src="images/SVM4x.png" width="300px"></center>](https://sensirion.com/my-sgp-ek)
+<img src="images/SVM41.png" width="400px">
 
 Click [here](https://sensirion.com/my-sgp-ek) to learn more about the SVM41
 sensor and the SVM41 Evaluation Kit Board.
 
 
-# Installation
+## Installation of the library
 
-To install, download the latest release as .zip file and add it to your
-[Arduino IDE](http://www.arduino.cc/en/main/software) via
+This library can be installed using the Arduino Library manager:
+Start the [Arduino IDE](http://www.arduino.cc/en/main/software) and open
+the Library Manager via
 
-    Sketch => Include Library => Add .ZIP Library...
+    Sketch => Include Library => Manage Libraries...
 
-Don't forget to **install the dependencies** listed below the same way via `Add
-.ZIP Library`
+Search for the `Sensririon UART Svm41` library in the `Filteryour search...` 
+field and install it by clicking the `install` button.
 
-Note: Installation via the Arduino Library Manager is coming soon.
+If you cannot find it in the library manager, download the latest release as .zip file 
+and add it to your [Arduino IDE](http://www.arduino.cc/en/main/software) via
 
-# Dependencies
+	`Sketch` ➔ `Include Library` ➔ `Add .ZIP Library...`
 
+Don't forget to **install the dependencies** listed below the same way via library 
+manager or `Add .ZIP Library`
+
+
+## Dependencies
 * [Sensirion Core](https://github.com/Sensirion/arduino-core)
 
-# Quick Start
+## Sensor wiring
 
-1. Connect the SVM41 Sensor to one of your Arduino board's
-   UART buses. We recommend using `Serial1`. Check the pinout of your Arduino
-   board to find the correct pins. The pinout of the SVM41
-   Sensor board can be found in the data sheet.
+Use the following pin description to connect your SVM41 to your Arduino board:
 
-    * **VDD** of the SEK-SVM41 to the **3.3V or 5V** of your Arduino board
-    * **GND** of the SEK-SVM41 to the **GND** of your Arduino board
-    * **RX** of the SEK-SVM41 to the **UART1-TX** of your Arduino board
-    * **TX** of the SEK-SVM41 to the **UART1-RX** of your Arduino board
+<img src="images/SVM41-Pinout-UART.png" width="500px">
 
-2. Open the `exampleUsage` sample project within the Arduino IDE
+| *Pin* | *Cable Color* | *Name* | *Description*                                           | *Comments*                                   |
+|-------|---------------|:------:|---------------------------------------------------------|----------------------------------------------|
+| 1     | red           |  VDD   | Supply Voltage                                          | 3.3 or 5V                                    |
+| 2     | black         |  GND   | Ground                                                  |                                              |
+| 3     | green         |   RX   | UART: Transmission pin for communication, connect to TX |                                              |
+| 4     | yellow        |   TX   | UART: Receiving pin for communication, connect to RX    |                                              |
+| 5     | blue          |  SEL   | Interface select                                        | Leave floating or pull to VDD to select UART |
+| 6     | purple        |   NC   | Do not connect                                          |                                              |
 
-       File => Examples => Sensirion UART SVM41 => exampleUsage
+### Board-specific wiring
 
-3. Depending on your Arduino board you may need to adapt the `#define
-   SENSOR_SERIAL_INTERFACE` to choose the correct serial interface.
+We recommend using Arduino Boards or an ESP supporting **two or more hardware serial connections** to run the example code. One serial port is needed to connect the SVM41 sensor and the other one (over USB) for logging to the Serial Monitor of the Arduino IDE.
 
-4. Click the `Upload` button in the Arduino IDE or
+Arduino Uno, Micro and Nano have only one hardware serial connection and are therefore not recommended to use. There is the option to use the SoftwareSerial library to emulate a serial connection, but it does not work reliably to communicate with the sensor at the required baudrate of 115200 baud.
 
-       Sketch => Upload
+You will find pinout schematics for recommended board models below:
 
-5. When the upload process has finished, open the `Serial Monitor` or `Serial
+<details><summary>Arduino Mega 2560 Rev3 Pinout</summary>
+<p>
+This arduino board supports 4 hardware serial connection, 
+and the connection to your PC over the USB Cable will use one of them (Serial Port 0).    
+
+The following wiring will connect the SVM41 to **Serial Port 1**. 
+
+| *SVM41* | *SVM41 Pin* | *Cable Color* | *Board Pin* |
+| :---: | --- | --- | --- |
+| VDD | 1 | red | +3.3V |
+| GND | 2 | black | GND |
+| RX  | 3 | green | D18 (TX1) |
+| TX  | 4 | yellow | D19 (RX1) |
+| SEL | 5 | blue | Do not connect |
+| NC  | 6 | purple | Do not connect |
+
+> **Note:** Make sure to connect serial pins as cross-over (RX pin of sensor -> TX on Arduino; TX pin of sensor -> RX pin of Ardunio)
+
+<img src="images/arduinoBoards/Arduino-Mega-2560-Rev3-pinout-UART-3V3.png" width="700px">
+</p>
+</details>
+
+<details><summary>Espressif ESP32 DevKitC Pinout</summary>
+<p>
+This board supports 4 hardware serial ports, and the USB connection to your PC uses one of them (Serial Port 0).
+
+The following wiring will connect the sensor to **Serial Port 2**.
+>**Note:** that Serial Port 1 uses by default pins shared with the Flash Memory and thus cannot be used without special configuration.
+
+| *SVM41* | *SVM41 Pin* | *Cable Color* | *Board Pin* |
+| :---: | --- | --- | --- |
+| VDD | 1 | red | 3.3V |
+| GND | 2 | black | GND |
+| RX  | 3 | green | GPIO17 (TXD 2)  |
+| TX  | 4 | yellow | GPIO16 (RXD 2) |
+| SEL | 5 | blue | Do not connect |
+| NC  | 6 | purple | Do not connect |
+
+> **Note:** Make sure to connect serial pins as cross-over (RX pin of sensor -> TX on Arduino; TX pin of sensor -> RX pin of Ardunio)
+
+
+<img src="images/arduinoBoards/esp32-devkitc-pinout-serial2-3V3.png" width="800px">
+
+</p>
+</details>
+
+
+## Quick start example
+
+1. Install the libraries and dependencies according to [Installation of the library](#installation-of-the-library)
+
+2. Connect the SVM41 Sensor as explained in [Sensor wiring](#sensor-wiring)
+
+3. Load the `exampleUsage` sample project:
+
+`File` ➔ `Examples` ➔ `Sensirion UART SVM41` ➔ `exampleUsage`
+
+4. Depending on your Arduino board you may need to adapt code sample. 
+See the [board specific instruction](#board-specific-instructions) section for more information. 
+
+1. Make sure to select the correct board model under `Tools` ➔ `Boards` and the 
+   connected USB port under `Tools` ➔ `Port`.
+
+2. Click the `Upload` button in the Arduino IDE or `Sketch` ➔ `Upload`
+
+3. When the upload process has finished, open the `Serial Monitor` or `Serial
    Plotter` via the `Tools` menu to observe the measurement values. Note that
-   the `Baud Rate` in the corresponding window has to be set to `115200 baud`.
+   the `Baud Rate` in the used tool has to be set to `115200 baud`.
+
+### Board-specific instructions
+<details><summary>Arduino Mega 2560</summary>
+<p>
+
+#### Serial Interface
+The provided wiring helped you to connect the SVM41 to **Serial Port 1**. 
+Therefore, the following line needs to be used in the usage example code:
+
+`#define SENSOR_SERIAL_INTERFACE Serial1`
+</p>
+</details>
+
+
+<details><summary>ESP32 DevKitC</summary>
+<p>
+
+#### Serial Interface
+The provided wiring helped you to connect the sensor to **Serial Port 2**.
+
+Since ESP boards require `HardwareSerial` implementation, you need to include the following lines in the usage example code:
+
+```
+#include <HardwareSerial.h>
+HardwareSerial HwSerial(2);
+#define SENSOR_SERIAL_INTERFACE HwSerial
+```
+</p>
+</details>
+
+
 
 # Contributing
 
