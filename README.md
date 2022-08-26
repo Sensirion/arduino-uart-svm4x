@@ -15,15 +15,15 @@ This library can be installed using the Arduino Library manager:
 Start the [Arduino IDE](http://www.arduino.cc/en/main/software) and open
 the Library Manager via
 
-    Sketch => Include Library => Manage Libraries...
+`Sketch` ➔ `Include Library` ➔ `Manage Libraries...`
 
-Search for the `Sensririon UART Svm41` library in the `Filteryour search...` 
+Search for the `Sensririon UART Svm41` library in the `Filter your search...` 
 field and install it by clicking the `install` button.
 
 If you cannot find it in the library manager, download the latest release as .zip file 
 and add it to your [Arduino IDE](http://www.arduino.cc/en/main/software) via
 
-	`Sketch` ➔ `Include Library` ➔ `Add .ZIP Library...`
+`Sketch` ➔ `Include Library` ➔ `Add .ZIP Library...`
 
 Don't forget to **install the dependencies** listed below the same way via library 
 manager or `Add .ZIP Library`
@@ -57,7 +57,7 @@ You will find pinout schematics for recommended board models below:
 
 <details><summary>Arduino Mega 2560 Rev3 Pinout</summary>
 <p>
-This arduino board supports 4 hardware serial connection, 
+This arduino board supports 4 hardware serial connections, 
 and the connection to your PC over the USB Cable will use one of them (Serial Port 0).    
 
 The following wiring will connect the SVM41 to **Serial Port 1**. 
@@ -139,6 +139,9 @@ Therefore, the following line needs to be used in the usage example code:
 
 <details><summary>ESP32 DevKitC</summary>
 <p>
+
+#### ESP32 Library
+The ESP32 board is not supported by default with Arduino IDE. If it is your first time using an ESP32 board, you should follow this [guide](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html) from Esspressif itself.
 
 #### Serial Interface
 The provided wiring helped you to connect the sensor to **Serial Port 2**.
