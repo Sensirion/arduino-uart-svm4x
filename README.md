@@ -1,12 +1,13 @@
-# Sensirion UART SVM41 Arduino Library
+# Sensirion UART SVM4x Arduino Library
 
-This is the Sensirion SVM41 library for Arduino using the
+This is the Sensirion SVM4x library for Arduino using the
 modules UART interface.
 
 <img src="images/SVM41.png" width="400px">
 
-Click [here](https://sensirion.com/my-sgp-ek) to learn more about the SVM41
-sensor and the SVM41 Evaluation Kit Board.
+Click [here](https://sensirion.com/my-sgp-ek) to learn more about the SVM4x 
+Evaluation Kit Board.
+The SVM4x evaluation kit covers evaluation of the SGP40 and SGP41 sensors.
 
 
 ## Installation of the library
@@ -17,7 +18,7 @@ the Library Manager via
 
 `Sketch` ➔ `Include Library` ➔ `Manage Libraries...`
 
-Search for the `Sensririon UART Svm41` library in the `Filter your search...` 
+Search for the `Sensririon UART Svm4x` library in the `Filter your search...` 
 field and install it by clicking the `install` button.
 
 If you cannot find it in the library manager, download the latest release as .zip file 
@@ -34,7 +35,7 @@ manager or `Add .ZIP Library`
 
 ## Sensor wiring
 
-Use the following pin description to connect your SVM41 to your Arduino board:
+Use the following pin description to connect your SVM4x to your Arduino board:
 
 <img src="images/SVM41-Pinout-UART.png" width="500px">
 
@@ -49,7 +50,7 @@ Use the following pin description to connect your SVM41 to your Arduino board:
 
 ### Board-specific wiring
 
-We recommend using Arduino Boards or an ESP supporting **two or more hardware serial connections** to run the example code. One serial port is needed to connect the SVM41 sensor and the other one (over USB) for logging to the Serial Monitor of the Arduino IDE.
+We recommend using Arduino Boards or an ESP supporting **two or more hardware serial connections** to run the example code. One serial port is needed to connect the SVM4x evaluation kit and the other one (over USB) for logging to the Serial Monitor of the Arduino IDE.
 
 Arduino Uno, Micro and Nano have only one hardware serial connection and are therefore not recommended to use. There is the option to use the SoftwareSerial library to emulate a serial connection, but it does not work reliably to communicate with the sensor at the required baudrate of 115200 baud.
 
@@ -60,9 +61,9 @@ You will find pinout schematics for recommended board models below:
 This arduino board supports 4 hardware serial connections, 
 and the connection to your PC over the USB Cable will use one of them (Serial Port 0).    
 
-The following wiring will connect the SVM41 to **Serial Port 1**. 
+The following wiring will connect the SVM4x to **Serial Port 1**. 
 
-| *SVM41* | *SVM41 Pin* | *Cable Color* | *Board Pin* |
+| *SVM4x* | *SVM4x Pin* | *Cable Color* | *Board Pin* |
 | :---: | --- | --- | --- |
 | VDD | 1 | red | +3.3V |
 | GND | 2 | black | GND |
@@ -84,7 +85,7 @@ This board supports 4 hardware serial ports, and the USB connection to your PC u
 The following wiring will connect the sensor to **Serial Port 2**.
 >**Note:** that Serial Port 1 uses by default pins shared with the Flash Memory and thus cannot be used without special configuration.
 
-| *SVM41* | *SVM41 Pin* | *Cable Color* | *Board Pin* |
+| *SVM4x* | *SVM4x Pin* | *Cable Color* | *Board Pin* |
 | :---: | --- | --- | --- |
 | VDD | 1 | red | 3.3V |
 | GND | 2 | black | GND |
@@ -106,11 +107,11 @@ The following wiring will connect the sensor to **Serial Port 2**.
 
 1. Install the libraries and dependencies according to [Installation of the library](#installation-of-the-library)
 
-2. Connect the SVM41 Sensor as explained in [Sensor wiring](#sensor-wiring)
+2. Connect the SVM4x evaluation kit as explained in [Sensor wiring](#sensor-wiring)
 
 3. Load the `exampleUsage` sample project:
 
-`File` ➔ `Examples` ➔ `Sensirion UART SVM41` ➔ `exampleUsage`
+`File` ➔ `Examples` ➔ `Sensirion UART SVM4x` ➔ `exampleUsage`
 
 4. Depending on your Arduino board you may need to adapt code sample. 
 See the [board specific instruction](#board-specific-instructions) section for more information. 
@@ -129,7 +130,7 @@ See the [board specific instruction](#board-specific-instructions) section for m
 <p>
 
 #### Serial Interface
-The provided wiring helped you to connect the SVM41 to **Serial Port 1**. 
+The provided wiring helped you to connect the SVM4x to **Serial Port 1**. 
 Therefore, the following line needs to be used in the usage example code:
 
 `#define SENSOR_SERIAL_INTERFACE Serial1`
