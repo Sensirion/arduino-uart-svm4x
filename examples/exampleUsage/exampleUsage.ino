@@ -141,8 +141,8 @@ void setup() {
     Serial.print("protocolMinor: ");
     Serial.print(protocolMinor);
     Serial.println();
-    float arg0 = 0.0;
-    error = sensor.getTemperatureOffsetForRhtMeasurements(arg0);
+    float tOffset = 0.0;
+    error = sensor.getTemperatureOffsetForRhtMeasurements(tOffset);
     if (error != NO_ERROR) {
         Serial.print("Error trying to execute "
                      "getTemperatureOffsetForRhtMeasurements(): ");
@@ -150,8 +150,8 @@ void setup() {
         Serial.println(errorMessage);
         return;
     }
-    Serial.print("arg0: ");
-    Serial.print(arg0);
+    Serial.print("tOffset: ");
+    Serial.print(tOffset);
     Serial.println();
     error = sensor.setTemperatureOffsetForRhtMeasurements(0);
     if (error != NO_ERROR) {
