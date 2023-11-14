@@ -9,6 +9,7 @@ Click [here](https://www.sensirion.com/my-sgp-ek/) to learn more about the Sensi
 
 
 The SVM4x evaluation kit covers evaluation of the SGP40 and SGP41 sensors.
+This driver supports SVM4x firmware version 3.1.0 and above.
 
 
 ## Installation of the library
