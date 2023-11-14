@@ -1,18 +1,14 @@
 # Sensirion UART SVM4X Arduino Library
 
 This is the Sensirion SVM4X library for Arduino allowing you to 
-communicate with a SVM4X sensor over UART using the SHDLC protocol.
+communicate with a SVM4X evaluation kit over UART using the SHDLC protocol.
 
 <img src="images/svm4x.png" width="300px">
 
-Click [here](https://www.sensirion.com/my-sgp-ek/) to learn more about the Sensirion SVM4X sensor.
+Click [here](https://www.sensirion.com/my-sgp-ek/) to learn more about the Sensirion SVM4X evaluation kit.
 
 
 The SVM4x evaluation kit covers evaluation of the SGP40 and SGP41 sensors.
-
-
-
-
 
 
 ## Installation of the library
