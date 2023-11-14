@@ -36,13 +36,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef NO_ERROR
+#define NO_ERROR 0
+#endif
+
 #ifndef SENSIRIONUARTSVM4X_H
 #define SENSIRIONUARTSVM4X_H
 
 #include "Arduino.h"
 #include <SensirionCore.h>
 
-#define NO_ERROR 0
 #define SVM4X_SHDLC_ADDR 0x00
 
 class SensirionUartSvm4x {
