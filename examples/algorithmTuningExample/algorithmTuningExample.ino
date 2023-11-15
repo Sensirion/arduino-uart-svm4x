@@ -71,92 +71,77 @@ void setup() {
         return;
     }
     delay(2000);
-    int8_t serialNumber[32] = {0};
-    error = sensor.getSerialNumber(serialNumber, 32);
+    int16_t vocIndexOffset = 0;
+    int16_t learningTimeOffsetHours = 0;
+    int16_t learningTimeGainHours = 0;
+    int16_t gatingMaxDurationMinutes = 0;
+    int16_t stdInitial = 0;
+    int16_t gainFactor = 0;
+    int16_t noxIndexOffset = 0;
+    error = sensor.getVocTuningParameters(
+        vocIndexOffset, learningTimeOffsetHours, learningTimeGainHours,
+        gatingMaxDurationMinutes, stdInitial, gainFactor);
     if (error != NO_ERROR) {
-        Serial.print("Error trying to execute getSerialNumber(): ");
+        Serial.print("Error trying to execute getVocTuningParameters(): ");
         errorToString(error, errorMessage, sizeof errorMessage);
         Serial.println(errorMessage);
         return;
     }
-    Serial.print("serialNumber: ");
-    Serial.print((const char*)serialNumber);
+    Serial.print("vocIndexOffset: ");
+    Serial.print(vocIndexOffset);
+    Serial.print("\t");
+    Serial.print("learningTimeOffsetHours: ");
+    Serial.print(learningTimeOffsetHours);
+    Serial.print("\t");
+    Serial.print("learningTimeGainHours: ");
+    Serial.print(learningTimeGainHours);
+    Serial.print("\t");
+    Serial.print("gatingMaxDurationMinutes: ");
+    Serial.print(gatingMaxDurationMinutes);
+    Serial.print("\t");
+    Serial.print("stdInitial: ");
+    Serial.print(stdInitial);
+    Serial.print("\t");
+    Serial.print("gainFactor: ");
+    Serial.print(gainFactor);
     Serial.println();
-    int8_t productType[32] = {0};
-    error = sensor.getProductType(productType, 32);
+    error = sensor.getNoxTuningParameters(
+        noxIndexOffset, learningTimeOffsetHours, learningTimeGainHours,
+        gatingMaxDurationMinutes, stdInitial, gainFactor);
     if (error != NO_ERROR) {
-        Serial.print("Error trying to execute getProductType(): ");
+        Serial.print("Error trying to execute getNoxTuningParameters(): ");
         errorToString(error, errorMessage, sizeof errorMessage);
         Serial.println(errorMessage);
         return;
     }
-    Serial.print("productType: ");
-    Serial.print((const char*)productType);
+    Serial.print("noxIndexOffset: ");
+    Serial.print(noxIndexOffset);
+    Serial.print("\t");
+    Serial.print("learningTimeOffsetHours: ");
+    Serial.print(learningTimeOffsetHours);
+    Serial.print("\t");
+    Serial.print("learningTimeGainHours: ");
+    Serial.print(learningTimeGainHours);
+    Serial.print("\t");
+    Serial.print("gatingMaxDurationMinutes: ");
+    Serial.print(gatingMaxDurationMinutes);
+    Serial.print("\t");
+    Serial.print("stdInitial: ");
+    Serial.print(stdInitial);
+    Serial.print("\t");
+    Serial.print("gainFactor: ");
+    Serial.print(gainFactor);
     Serial.println();
-    int8_t productName[8] = {0};
-    error = sensor.getProductName(productName, 8);
+    error = sensor.setVocTuningParameters(100, 12, 12, 180, 50, 230);
     if (error != NO_ERROR) {
-        Serial.print("Error trying to execute getProductName(): ");
+        Serial.print("Error trying to execute setVocTuningParameters(): ");
         errorToString(error, errorMessage, sizeof errorMessage);
         Serial.println(errorMessage);
         return;
     }
-    Serial.print("productName: ");
-    Serial.print((const char*)productName);
-    Serial.println();
-    uint8_t firmwareMajor = 0;
-    uint8_t firmwareMinor = 0;
-    bool firmwareDebug = false;
-    uint8_t hardwareMajor = 0;
-    uint8_t hardwareMinor = 0;
-    uint8_t protocolMajor = 0;
-    uint8_t protocolMinor = 0;
-    error = sensor.getVersion(firmwareMajor, firmwareMinor, firmwareDebug,
-                              hardwareMajor, hardwareMinor, protocolMajor,
-                              protocolMinor);
+    error = sensor.setNoxTuningParameters(1, 12, 12, 720, 50, 230);
     if (error != NO_ERROR) {
-        Serial.print("Error trying to execute getVersion(): ");
-        errorToString(error, errorMessage, sizeof errorMessage);
-        Serial.println(errorMessage);
-        return;
-    }
-    Serial.print("firmwareMajor: ");
-    Serial.print(firmwareMajor);
-    Serial.print("\t");
-    Serial.print("firmwareMinor: ");
-    Serial.print(firmwareMinor);
-    Serial.print("\t");
-    Serial.print("firmwareDebug: ");
-    Serial.print(firmwareDebug);
-    Serial.print("\t");
-    Serial.print("hardwareMajor: ");
-    Serial.print(hardwareMajor);
-    Serial.print("\t");
-    Serial.print("hardwareMinor: ");
-    Serial.print(hardwareMinor);
-    Serial.print("\t");
-    Serial.print("protocolMajor: ");
-    Serial.print(protocolMajor);
-    Serial.print("\t");
-    Serial.print("protocolMinor: ");
-    Serial.print(protocolMinor);
-    Serial.println();
-    float tOffset = 0.0;
-    error = sensor.getTemperatureOffsetForRhtMeasurements(tOffset);
-    if (error != NO_ERROR) {
-        Serial.print("Error trying to execute "
-                     "getTemperatureOffsetForRhtMeasurements(): ");
-        errorToString(error, errorMessage, sizeof errorMessage);
-        Serial.println(errorMessage);
-        return;
-    }
-    Serial.print("tOffset: ");
-    Serial.print(tOffset);
-    Serial.println();
-    error = sensor.setTemperatureOffsetForRhtMeasurements(0);
-    if (error != NO_ERROR) {
-        Serial.print("Error trying to execute "
-                     "setTemperatureOffsetForRhtMeasurements(): ");
+        Serial.print("Error trying to execute setNoxTuningParameters(): ");
         errorToString(error, errorMessage, sizeof errorMessage);
         Serial.println(errorMessage);
         return;
